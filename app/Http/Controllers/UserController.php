@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        // pluck is associative array
+        // pluck is an associative array
         $roles = Role::pluck('name','name')->all();
 
         return view('users.create',compact('roles'));
