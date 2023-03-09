@@ -69,12 +69,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
-            ->get();
-    
-        return view('roles.show',compact('role','rolePermissions'));
+        $user = User::find($id);
+        return view('users.show',compact('user'));
     }
 
     /**
@@ -85,13 +81,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
+        $user = User::find($id);
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
     
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        return view('users.edit',compact('user','roles','userRole'));
     }
 
     /**
@@ -105,17 +99,26 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permission' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'same:confirm-password',
+            'roles' => 'required'
         ]);
     
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
+        $input = $request->all();
+        if(!empty($input['password'])){ 
+            $input['password'] = Hash::make($input['password']);
+        }else{
+            $input = Arr::except($input,array('password'));    
+        }
     
-        $role->syncPermissions($request->input('permission'));
+        $user = User::find($id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
     
-        return redirect()->route('roles.index')
-                        ->with('success','Le rôle a été modifié.');
+        $user->assignRole($request->input('roles'));
+    
+        return redirect()->route('users.index')
+                        ->with('success','L\'utilisateur a été modifié.');
     }
 
     /**
@@ -126,8 +129,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-                        ->with('success','Le rôle a bien été supprimé.');
+        User::find($id)->delete();
+        return redirect()->route('users.index')
+                        ->with('success','User deleted successfully');
     }
 }
