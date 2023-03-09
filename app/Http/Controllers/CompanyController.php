@@ -102,10 +102,10 @@ class CompanyController extends Controller
             'name' => 'required|max:50',
             'address' => 'required|max:80',
             'city' => 'max:50',
-            'zip_code' => 'integer|max:5',
-            'siret' => 'integer|digits:14',
-            'code_ape' => 'string|digits:5',
-            'phone' => 'integer|digits:10',
+            'zip_code' => 'max:5',
+            'siret' => 'digits:14',
+            'code_ape' => 'digits:5',
+            'phone' => 'digits:10',
             'email' => 'required|email|max:80',
         ]);
         
