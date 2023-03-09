@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des entreprises</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
-</head>
-<body>
-    <div class="container mt-2">
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
         <div class="row">
             <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
+                <div class="pull-left mt-5">
                     <h2>Liste des entreprises</h2>
                 </div>
-                <div class="pull-right mb-2">
-                    <a class="btn btn-primary mr-3" href="{{ route('dashboard') }}">Retour au compte</a>
+                <div class="pull-right my-3">
                     <a class="btn btn-info mr-3" href="{{ route('companies.create') }}">Créer une entreprise</a>
                 </div>
             </div>
@@ -45,7 +39,7 @@
                                 <a class="btn btn-primary" href="{{ route('companies.edit',$company->id) }}">Edit</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -54,5 +48,4 @@
         </table>
         {!! $companies->links() !!}
     </div>
-</body>
-</html>
+@endsection

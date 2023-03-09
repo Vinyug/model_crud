@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Créer une entreprise</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-<body>
-    <div class="container mt-2">
+@section('content')
+    <div class="container">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 mt-5">
                 <div class="pull-left mb-2">
                     <h2>Créer une entreprise</h2>
                 </div>
-                <div class="pull-right">
-                    <a class="btn btn-primary mb-5" href="{{ route('companies.index') }}"> Retour</a>
+                <div class="pull-right my-3">
+                    <a class="btn btn-info" href="{{ route('companies.index') }}"> Retour</a>
                 </div>
             </div>
         </div>
@@ -80,9 +73,7 @@
                 <div class="text-danger mb-5">* les champs obligatoires</div>
             </div>
 
-            <button type="submit" class="btn btn-success ml-3">Créer</button>
+            <button type="submit" class="btn btn-outline-success ml-3">Créer</button>
         </form>
     </div>
-</body>
-
-</html>
+@endsection
