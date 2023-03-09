@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -27,7 +28,10 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        // get all users
+        $users = User::all();
+
+        return view('companies.create', compact('users'));
     }
 
     /**
@@ -38,19 +42,21 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+
         // data validation
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'name' => 'required|max:50',
             'address' => 'required|max:80',
             'city' => 'max:50',
-            'zip_code' => 'integer|max:5',
-            'siret' => 'integer|digits:14',
-            'code_ape' => 'string|digits:5',
-            'phone' => 'integer|digits:10',
+            'zip_code' => 'max:5',
+            'siret' => 'digits:14',
+            'code_ape' => 'digits:5',
+            'phone' => 'digits:10',
             'email' => 'required|email|max:80',
         ]);
         
+        // dd($request);
+
         // insert in DB
         Company::create($request->post());
 
@@ -77,7 +83,10 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('companies.edit',compact('company'));
+        // get all users
+        $users = User::all();
+
+        return view('companies.edit',compact('company', 'users'));
     }
 
     /**
@@ -90,7 +99,6 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'name' => 'required|max:50',
             'address' => 'required|max:80',
             'city' => 'max:50',

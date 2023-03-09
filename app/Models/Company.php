@@ -21,4 +21,9 @@ class Company extends Model
         'uuid',
         'present',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
