@@ -8,7 +8,7 @@
                     <h2>Liste des entreprises</h2>
                 </div>
                 <div class="pull-right my-3">
-                    @can('companies-create')
+                    @can('company-create')
                     <a class="btn btn-info mr-3" href="{{ route('companies.create') }}">Créer une entreprise</a>
                     @endcan
                 </div>
@@ -38,13 +38,13 @@
                         <td>{{ $company->email }}</td>
                         <td>
                             <form action="{{ route('companies.destroy',$company->id) }}" method="Post">
-                                @can('companies-edit')
+                                @can('company-edit')
                                 <a class="btn btn-primary" href="{{ route('companies.edit',$company->id) }}">Edit</a>
                                 @endcan
 
                                 @csrf
                                 @method('DELETE')
-                                @can('companies-delete')
+                                @can('company-delete')
                                 <button type="submit" class="btn btn-outline-danger">Delete</button>
                                 @endcan
                             </form>
