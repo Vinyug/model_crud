@@ -1,14 +1,14 @@
 <?php
-
+    
 namespace App\Http\Controllers;
-
-use App\Models\User;
-use App\Http\Controllers\Controller;
+    
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,13 +17,26 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    function __construct()
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $users = User::latest()->paginate(5);
+        return view('users.index',compact('users'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -31,12 +44,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        // pluck is an associative array
         $roles = Role::pluck('name','name')->all();
-
         return view('users.create',compact('roles'));
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -59,9 +70,9 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success','L\'utilisateur a été crée');
+                        ->with('success','User created successfully');
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -73,7 +84,7 @@ class UserController extends Controller
         $user = User::find($id);
         return view('users.show',compact('user'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -88,7 +99,7 @@ class UserController extends Controller
     
         return view('users.edit',compact('user','roles','userRole'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -119,9 +130,9 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success','L\'utilisateur a été modifié.');
+                        ->with('success','User updated successfully');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
