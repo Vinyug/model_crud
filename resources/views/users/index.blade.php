@@ -8,7 +8,9 @@
                 <h2>Listes des utilisateurs</h2>
             </div>
             <div class="pull-right my-3">
+                @can('user-create')
                 <a class="btn btn-info" href="{{ route('users.create') }}"> Créer un nouvel utilisateur </a>
+                @endcan
             </div>
         </div>
     </div>
@@ -42,11 +44,15 @@
           @endif
         </td>
         <td>
-           <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-           <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+          <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+            @can('user-create')
+            <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+            @endcan
+            @can('user-delete')
             {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger']) !!}
+              {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger']) !!}
             {!! Form::close() !!}
+            @endcan
         </td>
       </tr>
      @endforeach

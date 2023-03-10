@@ -29,5 +29,11 @@ class CreateAdminUserSeeder extends Seeder
         $role->syncPermissions($permissions);
      
         $user->assignRole([$role->id]);
+
+        // Attach permissions to user
+        $userPermissions = Permission::all();
+        foreach ($userPermissions as $permission) {
+            $user->givePermissionTo($permission);
+        }
     }
 }
