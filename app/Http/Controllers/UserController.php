@@ -65,6 +65,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
+            'company_id' => 'required',
             'roles' => 'required'
         ]);
     
@@ -75,7 +76,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+                        ->with('success','l\'utilisateur est crée.');
     }
     
     /**
@@ -104,8 +105,9 @@ class UserController extends Controller
         $userRole = $user->roles->pluck('name','name')->all();
         
         $company = Company::pluck('name', 'id')->all();
+        $userCompany = $user->company->id;
     
-        return view('users.edit',compact('user','roles','userRole', 'company'));
+        return view('users.edit',compact('user','roles','userRole', 'company', 'userCompany'));
     }
     
     /**
@@ -121,6 +123,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
+            'company_id' => 'required',
             'roles' => 'required'
         ]);
     
@@ -138,7 +141,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
+                        ->with('success','L\'utilisateur a été mis à jour.');
     }
     
     /**
