@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
-            $table->string('state');
-            $table->string('job');
+            $table->string('state')->nullable();
+            $table->string('job')->nullable();
             $table->timestamps();
         });
     }

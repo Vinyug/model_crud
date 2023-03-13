@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 mt-5">
             <div class="pull-left">
-                <h2>Modifier un rôle</h2>
+                <h2>Modifier un poste</h2>
             </div>
             <div class="pull-right my-3">
                 <a class="btn btn-info" href="{{ route('roles.index') }}"> Retour </a>

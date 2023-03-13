@@ -40,6 +40,13 @@
                     </x-nav-link>
                 </div>
                 @endcan
+
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.index')">
+                        {{ __('Postes') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
