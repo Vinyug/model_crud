@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
     
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
@@ -32,9 +33,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::latest()->paginate(5);
-        return view('users.index',compact('users'))
+        $users = User::with('company')->latest()->paginate(5);
+
+        return view('users.index', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
+        
     }
     
     /**
@@ -45,7 +48,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        $company = Company::pluck('name', 'id');
+
+        return view('users.create',compact('roles', 'company'));
     }
     
     /**
@@ -94,10 +99,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
+        
+        $company = Company::pluck('name', 'id')->all();
     
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user','roles','userRole', 'company'));
     }
     
     /**
