@@ -15,7 +15,7 @@ class JobController extends Controller
      */
     public function index(Request $request)
     {
-        $listings = Listing::select('job')->whereNotNull('job')->where('job', '!=', '')->distinct()->paginate(5);
+        $listings = Listing::select('id', 'job')->whereNotNull('job')->where('job', '!=', '')->distinct()->paginate(5);
 
         return view('jobs.index', compact('listings'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -41,7 +41,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-         $this->validate($request, [
+        $this->validate($request, [
             'job' => 'required',
         ]);
     
@@ -70,7 +70,9 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        //
+        $listing = Listing::findOrFail($id);
+     
+        return view('jobs.edit',compact('listing'));
     }
 
     /**
@@ -82,7 +84,16 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'job' => 'required',
+        ]);
+    
+        $listing = Listing::findOrFail($id);
+        $listing->job = $request->input('job');
+        $listing->save();
+    
+        return redirect()->route('jobs.index')
+                        ->with('success','Le poste est mis à jour.');
     }
 
     /**
@@ -93,6 +104,8 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Listing::findOrFail($id)->delete();
+        return redirect()->route('jobs.index')
+                        ->with('success','Le poste est supprimé');
     }
 }

@@ -8,7 +8,7 @@
                 <h2>Modifier un poste</h2>
             </div>
             <div class="pull-right my-3">
-                <a class="btn btn-info" href="{{ route('roles.index') }}"> Retour </a>
+                <a class="btn btn-info" href="{{ route('jobs.index') }}"> Retour </a>
             </div>
         </div>
     </div>
@@ -25,27 +25,19 @@
         </div>
     @endif
     
-    {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
+    {!! Form::model($listing, ['method' => 'PATCH','route' => ['jobs.update', $listing->id]]) !!}
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Poste:</strong>
+                    {!! Form::text('job', null, array('placeholder' => 'Nom du poste','class' => 'form-control')) !!}
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Permission:</strong>
-                <br/>
-                @foreach($permission as $value)
-                    <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                    {{ $value->name }}</label>
-                <br/>
-                @endforeach
+        
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <button type="submit" class="btn btn-outline-success">Modifier</button>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <button type="submit" class="btn btn-outline-success">Modifier</button>
         </div>
     </div>
     {!! Form::close() !!}

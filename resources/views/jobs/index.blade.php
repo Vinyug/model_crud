@@ -35,12 +35,12 @@
             <td>{{ $listing->job }}</td>
             <td>
                 {{-- @can('job-edit') --}}
-                    <a class="btn btn-primary" href="">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('jobs.edit', $listing->id) }}">Edit</a>
                 {{-- @endcan --}}
                 {{-- @can('job-delete') --}}
-                    {{-- {!! Form::open(['method' => 'DELETE','route' => ['jobs.destroy', $listings->id],'style'=>'display:inline']) !!} --}}
+                {!! Form::open(['method' => 'DELETE','route' => ['jobs.destroy', $listing->id],'style'=>'display:inline']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger']) !!}
-                    {{-- {!! Form::close() !!} --}}
+                    {!! Form::close() !!}
                 {{-- @endcan --}}
             </td>
         </tr>
