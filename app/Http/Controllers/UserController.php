@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Listing;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
@@ -49,8 +50,9 @@ class UserController extends Controller
     {
         $roles = Role::pluck('name','name')->all();
         $company = Company::pluck('name', 'id');
+        $job = Listing::whereNotNull('job')->where('job','!=', '')->pluck('job', 'job');
 
-        return view('users.create',compact('roles', 'company'));
+        return view('users.create',compact('roles', 'company', 'job'));
     }
     
     /**
@@ -65,7 +67,8 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'company_id' => 'required',
+            'company_id' => 'required|exists:companies,id',
+            'job' => 'exists:listings,job|nullable',
             'roles' => 'required'
         ]);
     

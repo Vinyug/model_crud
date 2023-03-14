@@ -61,6 +61,12 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
+                <strong>Poste:</strong>
+                {!! Form::select('job',$job, null, array('placeholder' => 'Choisir un poste', 'class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
                 <strong>Role:</strong>
                 {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
             </div>
