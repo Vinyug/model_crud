@@ -6,6 +6,7 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left mt-5">
                 <h2>Listes des utilisateurs</h2>
+                <h2>TEST<h2>
             </div>
             <div class="pull-right my-3">
                 @can('user-create')
