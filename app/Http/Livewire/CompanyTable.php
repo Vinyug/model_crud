@@ -123,10 +123,10 @@ final class CompanyTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            Column::make('ID', 'id'),
+                // ->makeInputRange()
 
-            Column::make('NAME', 'name')
+            Column::make('Name', 'name')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),

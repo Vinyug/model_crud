@@ -22,18 +22,6 @@ class Company extends Model
         'present',
     ];
 
-    protected $searchable = [
-        'name',
-        'address',
-        'city', 
-        'zip_code',
-        'siret',
-        'code_ape', 
-        'phone', 
-        'email',
-        'present',
-    ];
-
     public function users()
     {
         return $this->hasMany(User::class);
