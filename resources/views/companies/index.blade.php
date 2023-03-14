@@ -19,7 +19,14 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
-        <table class="table table-bordered">
+
+
+        @livewire('company-table')
+
+
+
+
+        {{-- <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>N° entreprise</th>
@@ -52,7 +59,7 @@
                     </tr>
                     @endforeach
             </tbody>
-        </table>
+        </table> --}}
         {!! $companies->links() !!}
     </div>
 @endsection

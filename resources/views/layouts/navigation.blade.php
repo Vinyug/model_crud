@@ -20,7 +20,7 @@
                 @can('company-list')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
-                        {{ __('Liste des entreprises') }}
+                        {{ __('Liste des entreprises POWERGRID') }}
                     </x-nav-link>
                 </div>
                 @endcan
