@@ -29,6 +29,7 @@
        <th>Name</th>
        <th>Email</th>
        <th>Entreprise</th>
+       <th>Poste</th>
        <th>Roles</th>
        <th width="280px">Action</th>
      </tr>
@@ -37,7 +38,8 @@
         <td>{{ ++$i }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
-        <td>{{ optional($user->company)->name }}</td>
+        <td>{{ $user->company->name }}</td>
+        <td>{{ $user->job }}</td>
         <td>
           @if(!empty($user->getRoleNames()))
             @foreach($user->getRoleNames() as $v)
