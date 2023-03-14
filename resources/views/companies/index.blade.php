@@ -59,7 +59,7 @@
                     </tr>
                     @endforeach
             </tbody>
-        </table> --}}
-        {!! $companies->links() !!}
+        </table>
+        {!! $companies->links() !!} --}}
     </div>
 @endsection
