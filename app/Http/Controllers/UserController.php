@@ -109,8 +109,11 @@ class UserController extends Controller
         
         $company = Company::pluck('name', 'id')->all();
         $userCompany = $user->company->id;
+
+        $job = Listing::whereNotNull('job')->where('job','!=', '')->pluck('job', 'job');
+        $userJob = $user->job;
     
-        return view('users.edit',compact('user','roles','userRole', 'company', 'userCompany'));
+        return view('users.edit',compact('user','roles','userRole', 'company', 'userCompany', 'job', 'userJob'));
     }
     
     /**
