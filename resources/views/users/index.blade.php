@@ -38,7 +38,7 @@
         <td>{{ ++$i }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
-        <td>{{ $user->company->name }}</td>
+        <td>{{ optional($user->company)->name }}</td>
         <td>{{ $user->job }}</td>
         <td>
           @if(!empty($user->getRoleNames()))

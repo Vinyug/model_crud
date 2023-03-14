@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:job-list|job-create|job-edit|job-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:job-create', ['only' => ['create','store']]);
+         $this->middleware('permission:job-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:job-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

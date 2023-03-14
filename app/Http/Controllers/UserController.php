@@ -67,7 +67,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'company_id' => 'required|exists:companies,id',
+            'company_id' => 'nullable|exists:companies,id',
             'job' => 'exists:listings,job|nullable',
             'roles' => 'required'
         ]);
@@ -108,7 +108,7 @@ class UserController extends Controller
         $userRole = $user->roles->pluck('name','name')->all();
         
         $company = Company::pluck('name', 'id')->all();
-        $userCompany = $user->company->id;
+        $userCompany = $user->company_id;
 
         $job = Listing::whereNotNull('job')->where('job','!=', '')->pluck('job', 'job');
         $userJob = $user->job;
@@ -129,7 +129,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
-            'company_id' => 'required',
+            'company_id' => 'nullable|exists:companies,id',
             'roles' => 'required'
         ]);
     

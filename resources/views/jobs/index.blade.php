@@ -8,9 +8,9 @@
                 <h2>Liste des postes</h2>
             </div>
             <div class="pull-right my-3">
-            {{-- @can('job-create') --}}
+            @can('job-create')
                 <a class="btn btn-info" href="{{ route('jobs.create') }}"> Créer un nouveau poste </a>
-            {{-- @endcan --}}
+            @endcan
             </div>
         </div>
     </div>
@@ -34,14 +34,14 @@
             <td>{{ ++$i }}</td>
             <td>{{ $listing->job }}</td>
             <td>
-                {{-- @can('job-edit') --}}
+                @can('job-edit')
                     <a class="btn btn-primary" href="{{ route('jobs.edit', $listing->id) }}">Edit</a>
-                {{-- @endcan --}}
-                {{-- @can('job-delete') --}}
+                @endcan
+                @can('job-delete')
                 {!! Form::open(['method' => 'DELETE','route' => ['jobs.destroy', $listing->id],'style'=>'display:inline']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger']) !!}
                     {!! Form::close() !!}
-                {{-- @endcan --}}
+                @endcan
             </td>
         </tr>
         @endforeach
